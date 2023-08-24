@@ -1,6 +1,6 @@
 const gameBoard = (() => {
     const gameBoardContainer = document.querySelector('.gameBoard-container');
-    const gameBoardContent = ['O', 'X', 'O', 'O', 'X', 'O', 'X', 'X', 'O'];
+    const gameBoardContent = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
     const renderGameBoard = function() {
         for(let i = 0; i < gameBoardContent.length; i++) {
             let cell = document.createElement('div');
@@ -14,17 +14,10 @@ const gameBoard = (() => {
     const addListener = function(target) {
         let index = target.classList[0];
         target.addEventListener('click', event => {
-            fillCell(index);
+            GameController.fillCell(index, gameBoardContent);
             clearGameBoard();
             renderGameBoard();
-            GameController.playerTurn();
         })
-    };
-
-    const fillCell = function(index){
-        if(GameController.currentTurn.value === 1) {
-            gameBoardContent[index] = 'X';
-        } else gameBoardContent[index] = 'O';
     };
 
     const clearGameBoard = function(){
@@ -50,9 +43,21 @@ const GameController = (() => {
         currentTurn.value === 1 ? currentTurn = playerTwo : currentTurn = playerOne;
     };
 
-   return{ 
-        currentTurn, 
-        playerTurn
+    const fillCell = function(index, object){
+        if(object[index] === ' '){
+            if(currentTurn.value === 1) {
+                object[index] = 'X';
+            } else object[index] = 'O';
+            playerTurn();
+        };
+    };
+
+    const playGame = () => {
+        
+    };
+
+   return{
+        fillCell
    };
     
 })();
