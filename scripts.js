@@ -24,8 +24,24 @@ const gameBoard = (() => {
         gameBoardContainer.innerHTML = '';
     };
 
+    const threeInRow = function(index1, index2, index3, marker) {
+        if (gameBoardContent[index1] === marker && gameBoardContent[index2] === marker && gameBoardContent[index3] === marker){
+            return true;
+        };
+    };
+
+    const checkForThreeInRow = function(marker){
+        if(threeInRow(0, 1, 2, marker) || threeInRow(0, 3, 6, marker) || threeInRow(0, 4, 8, marker) || 
+        threeInRow(1, 4, 7, marker) || threeInRow(2, 5, 8, marker) || threeInRow(2, 4, 6, marker) || 
+        threeInRow(3, 4, 5, marker) || threeInRow(6, 7, 8, marker)) {
+            return true;
+        };
+    };
+
     return {
-        renderGameBoard
+        renderGameBoard,
+        checkForThreeInRow,
+        threeInRow,
     };
 })();
 
@@ -52,12 +68,17 @@ const GameController = (() => {
         };
     };
 
-    const playGame = () => {
-        
+    const checkForWin = function() {
+        if(gameBoard.checkForThreeInRow('X')){
+            console.log('Player one wins');
+        } else if(gameBoard.checkForThreeInRow('O')) {
+            console.log('Player two wins')
+        };
     };
 
    return{
-        fillCell
+        fillCell,
+        checkForWin
    };
     
 })();
