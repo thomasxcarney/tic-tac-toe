@@ -40,7 +40,7 @@ const gameBoard = (() => {
 
     const checkForTie = function() {
         if(!gameBoardContent.includes(' ')){
-            console.log('it\'s a tie');
+            alert('it\'s a tie');
         };
     };
 
@@ -78,16 +78,34 @@ const GameController = (() => {
 
     const checkForWin = function() {
         if(gameBoard.checkForThreeInRow('X')){
-            console.log('Player one wins');
+            alert('Player one wins');
         } else if(gameBoard.checkForThreeInRow('O')) {
-            console.log('Player two wins');
+            alert('Player two wins');
         };
     };
+
+    const startBtn = document.getElementById('startBtn');
+    startBtn.addEventListener('click', event => {
+        playGame();
+    });
+
+    const player1Name = document.getElementsByClassName('playerName')[0];
+    const player2Name = document.getElementsByClassName('playerName')[1];
+
+    const setPlayerNames = function () {
+        player1Name.innerHTML = prompt('Enter player one name', ' ');
+        player2Name.innerHTML = prompt('Enter player two name', ' ');
+    }
+
+    const playGame = function () {
+        setPlayerNames();
+    }
 
    return{
         fillCell
    };
     
 })();
+
 
 gameBoard.renderGameBoard();
