@@ -73,23 +73,25 @@ const GameController = (() => {
     const playerOne = playerCreator('Player One', 1);
     const playerTwo = playerCreator('Player Two', 2);
 
-    let currentTurn = playerOne;
+    let currentTurn;
 
     const playerTurn = () => {
         currentTurn.value === 1 ? currentTurn = playerTwo : currentTurn = playerOne;
     };
 
     const fillCell = function(index, object){
-        if(object[index] === ' '){
-            if(currentTurn.value === 1) {
-                object[index] = 'X';
-            } else object[index] = 'O';
-            checkForWin();
-            gameBoard.checkForTie();
-            if(gameBoard.checkForTie == true){
-                changeBtnToRestart();
-            }
-            playerTurn();
+        if(currentTurn) {
+            if(object[index] === ' '){
+                if(currentTurn.value === 1) {
+                    object[index] = 'X';
+                } else object[index] = 'O';
+                checkForWin();
+                gameBoard.checkForTie();
+                if(gameBoard.checkForTie == true){
+                    changeBtnToRestart();
+                }
+                playerTurn();
+            };
         };
     };
 
@@ -128,6 +130,7 @@ const GameController = (() => {
     const playGame = function () {
         gameBoard.resetGameBoard();
         setPlayerNames();
+        currentTurn = playerOne;
         gameBoard.renderGameBoard();
     };
 
@@ -136,3 +139,5 @@ const GameController = (() => {
    };
     
 })();
+
+gameBoard.renderGameBoard();
