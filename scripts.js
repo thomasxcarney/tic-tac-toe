@@ -38,10 +38,16 @@ const gameBoard = (() => {
         };
     };
 
+    const checkForTie = function() {
+        if(!gameBoardContent.includes(' ')){
+            console.log('it\'s a tie');
+        };
+    };
+
     return {
         renderGameBoard,
         checkForThreeInRow,
-        threeInRow,
+        checkForTie
     };
 })();
 
@@ -64,6 +70,8 @@ const GameController = (() => {
             if(currentTurn.value === 1) {
                 object[index] = 'X';
             } else object[index] = 'O';
+            checkForWin();
+            gameBoard.checkForTie();
             playerTurn();
         };
     };
@@ -72,13 +80,12 @@ const GameController = (() => {
         if(gameBoard.checkForThreeInRow('X')){
             console.log('Player one wins');
         } else if(gameBoard.checkForThreeInRow('O')) {
-            console.log('Player two wins')
+            console.log('Player two wins');
         };
     };
 
    return{
-        fillCell,
-        checkForWin
+        fillCell
    };
     
 })();
