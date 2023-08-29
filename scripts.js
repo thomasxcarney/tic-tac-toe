@@ -1,6 +1,7 @@
 const gameBoard = (() => {
     const gameBoardContainer = document.querySelector('.gameBoard-container');
     const gameBoardContent = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+
     const renderGameBoard = function() {
         for(let i = 0; i < gameBoardContent.length; i++) {
             let cell = document.createElement('div');
@@ -8,13 +9,6 @@ const gameBoard = (() => {
             addListener(cell);
             cell.innerHTML = gameBoardContent[i];
             gameBoardContainer.appendChild(cell);
-        };
-    };
-
-    const refillContent = function (){
-        gameBoardContent.length = 0;
-        for(let i = 0; i <  9; i++){
-            gameBoardContent.push(' ');
         };
     };
 
@@ -27,8 +21,30 @@ const gameBoard = (() => {
         })
     };
 
+    const AIselection = function() {
+        let index = AIplayer.getRandomNumber();
+        while (gameBoardContent[index] != ' ') {
+            index = AIplayer.getRandomNumber();
+        };
+        GameController.fillCell(index, gameBoardContent);
+        clearGameBoard();
+        renderGameBoard();
+    };
+
+    const refillContent = function (){
+        gameBoardContent.length = 0;
+        for(let i = 0; i <  9; i++){
+            gameBoardContent.push(' ');
+        };
+    };
+
     const clearGameBoard = function(){
         gameBoardContainer.innerHTML = '';
+    };
+
+    const resetGameBoard = function(){
+        refillContent();
+        clearGameBoard();
     };
 
     const threeInRow = function(index1, index2, index3, marker) {
@@ -52,16 +68,12 @@ const gameBoard = (() => {
         };
     };
 
-    const resetGameBoard = function(){
-        refillContent();
-        clearGameBoard();
-    };
-
     return {
         renderGameBoard,
         checkForThreeInRow,
         checkForTie,
-        resetGameBoard
+        resetGameBoard,
+        AIselection
     };
 })();
 
@@ -77,6 +89,9 @@ const GameController = (() => {
 
     const playerTurn = () => {
         currentTurn.value === 1 ? currentTurn = playerTwo : currentTurn = playerOne;
+        if(currentTurn.value === 2) {
+            AIplayersTurn();
+        }
     };
 
     const fillCell = function(index, object){
@@ -134,10 +149,24 @@ const GameController = (() => {
         gameBoard.renderGameBoard();
     };
 
+    const AIplayersTurn = function () {
+        gameBoard.AIselection();
+    };
+
    return{
         fillCell
    };
     
+})();
+
+const AIplayer = (() => {
+    const getRandomNumber = function() {
+            return Math.floor(Math.random() * (9 - 0));
+        };
+
+    return {
+    getRandomNumber
+    };
 })();
 
 gameBoard.renderGameBoard();
