@@ -5,14 +5,20 @@
 
 body {
     display: grid;
+    gap: 10px;
     justify-items: center;
     font-family: Arial, Helvetica, sans-serif;
     grid-template-columns: 1fr 1fr 1fr;
+    background: rgb(3,84,101);
+    background: radial-gradient(circle, rgba(3,84,101,1) 0%, rgba(0,252,188,1) 100%);
 }
 
 .header {
     padding: 20px;
     grid-column: 1/4;
+    background-color: rgba(249, 249, 249, 0.215);
+    justify-self: stretch;
+    text-align: center;
 }
 
 .gameBoard-container {
@@ -21,6 +27,7 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+    box-shadow: 2.5px 2.5px 7px black;
 }
 
 .cell {
@@ -31,4 +38,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.sidebar {
+    display: grid;
+    align-items: center;
+    text-align: center;
+}
+
+.sidebar button {
+    align-self: center;
+    padding: 5px 10px;
+    box-shadow: 2.5px 2.5px 7px black;
 }
