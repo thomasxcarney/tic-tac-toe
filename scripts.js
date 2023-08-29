@@ -65,7 +65,7 @@ const gameBoard = (() => {
         if(!gameBoardContent.includes(' ') && !checkForThreeInRow('X') && !checkForThreeInRow('O')){
             alert('it\'s a tie');
             return true;
-        };
+        } else false;
     };
 
     return {
@@ -89,7 +89,7 @@ const GameController = (() => {
 
     const playerTurn = () => {
         currentTurn.value === 1 ? currentTurn = playerTwo : currentTurn = playerOne;
-        if(currentTurn.value === 2) {
+        if(currentTurn.value === 2 && AIplayer.AIplayerTwo.status == 'on') {
             AIplayersTurn();
         }
     };
@@ -101,8 +101,7 @@ const GameController = (() => {
                     object[index] = 'X';
                 } else object[index] = 'O';
                 checkForWin();
-                gameBoard.checkForTie();
-                if(gameBoard.checkForTie == true){
+                if(gameBoard.checkForTie()){
                     changeBtnToRestart();
                 }
                 playerTurn();
@@ -160,12 +159,34 @@ const GameController = (() => {
 })();
 
 const AIplayer = (() => {
+    const AIplayerCreator = (status) => {
+        return {status};
+    };
+
+    const AIplayerTwo = AIplayerCreator('off');
+
     const getRandomNumber = function() {
             return Math.floor(Math.random() * (9 - 0));
         };
+    
+    const AIbtn = document.getElementById('play-AI');
+
+    const turnAIon = function() {
+        if(AIplayerTwo.status == 'on'){
+            AIplayerTwo.status = 'off'
+        } else if (AIplayerTwo.status == 'off'){
+            AIplayerTwo.status = 'on'
+        };
+    };
+
+    AIbtn.addEventListener('click', event => {
+        console.log(AIplayerTwo.status)
+        turnAIon();
+    });
 
     return {
-    getRandomNumber
+    getRandomNumber,
+    AIplayerTwo
     };
 })();
 
